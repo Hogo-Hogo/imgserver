@@ -95,7 +95,7 @@ else {
       Nahraj nebo přetáhni soubory sem:
       <input type="file" name="image" required style="cursor: pointer; padding: 10px;" size="800">
      
-      <button name="submit" id="nahrat" value="Nahrát" onclick="nahravam();">Nahrát</button>		
+      <button name="submit" id="nahrat" value="Nahrát" onclick="nahravam();">Upload</button>		
 </form>
 
 
