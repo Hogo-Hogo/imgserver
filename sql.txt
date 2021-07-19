@@ -1,0 +1,5 @@
+images {
+id – INT PRIMARY KEY A_I
+images – VARCHAR(9999)
+kod – VARCHAR(255)
+}
