@@ -24,7 +24,7 @@
     </style>
 </head>
     <center style="box-shadow: 0 0 1em whitesmoke; border-radius: 2em; background: #EEE; ">
-    <br><br><a href="/upload.php" class="a">Upload a image</a><br><br>
+    <br><br><a href="/upload.php" class="a cursive">Upload a image</a><br><br>
 <?php
 $db = mysqli_connect('localhost','root','password','dbname');
 
