@@ -29,8 +29,8 @@ if(isset($_POST['submit']))
 || ($_FILES["image"]["type"] == "image/jpeg")
 || ($_FILES["image"]["type"] == "image/jpg")
 || ($_FILES["image"]["type"] == "image/png"))
-&& ($_FILES["image"]["size"] < 100000000))
-    $povolene = array('jpg', 'jpeg', 'png', 'gif');
+&& ($_FILES["image"]["size"] < 100000000)) // checks the image type and size
+    $povolene = array('jpg', 'jpeg', 'png', 'gif'); 
     $cislo1 = rand(1111,9999); 
     $cislo2 = rand(1111,9999);
 	$povolene = array_flip($povolene);
@@ -39,11 +39,11 @@ if(isset($_POST['submit']))
  
     
     $obr_nm = $_FILES['image']['name']; 
-    $umistit = 'images/'.$cislo3.$obr_nm;
-    $umisteni = 'images/'.$cislo3.$obr_nm; 
+    $umistit = 'images/'.$cislo3.$obr_nm; // the folder in which it will be
+    $umisteni = 'images/'.$cislo3.$obr_nm; // 
 
-    move_uploaded_file($_FILES['image']["tmp_name"],$umistit);  
-    $check = mysqli_query($db,"INSERT INTO images (images, kod) VALUES('$umisteni', '$cislo2')");  
+    move_uploaded_file($_FILES['image']["tmp_name"],$umistit);  // upload file in folder 
+    $check = mysqli_query($db,"INSERT INTO images (images, kod) VALUES('$umisteni', '$cislo2')");  //insert image URL and code in DB
 		
     if($check)
     { 
