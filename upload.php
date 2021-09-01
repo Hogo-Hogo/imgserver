@@ -89,15 +89,15 @@ else {
 <h2>Nahrát obrázek:</h2>
 <script>
     function upload() {
-        document.getElementById('nahrat').innerHTML='Uploading…';
+        document.getElementById('upload').innerHTML='Uploading…';
     }
 </script>
-	    <img style="display: none" id="nahrany-obr">
+	    <img style="display: none" id="nahrany-img">
 <form method="POST" enctype="multipart/form-data">
       Nahraj nebo přetáhni soubory sem:
       <input type="file" name="image" onchange="zobrazit(this)" required style="cursor: pointer; padding: 10px;" size="800">
      
-      <button name="submit" id="nahrat" value="Nahrát" onclick="upload();">Upload</button>		
+      <button name="submit" id="upload" value="Upload" onclick="upload();">Upload</button>		
 </form>
 
 
