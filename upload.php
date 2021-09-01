@@ -3,6 +3,7 @@
 <head>
   <title>UPLOAD a image here</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+	<script src="zobrazit.js"></script>
     <style>
   
     body {background: linear-gradient(#333, black, #222) fixed;}
@@ -87,15 +88,16 @@ else {
 
 <h2>Nahrát obrázek:</h2>
 <script>
-    function nahravam() {
-        document.getElementById('nahrat').innerHTML('Uploading…');
+    function upload() {
+        document.getElementById('nahrat').innerHTML='Uploading…';
     }
 </script>
+	    <img style="display: none" id="nahrany-obr">
 <form method="POST" enctype="multipart/form-data">
       Nahraj nebo přetáhni soubory sem:
-      <input type="file" name="image" required style="cursor: pointer; padding: 10px;" size="800">
+      <input type="file" name="image" onchange="zobrazit(this)" required style="cursor: pointer; padding: 10px;" size="800">
      
-      <button name="submit" id="nahrat" value="Nahrát" onclick="nahravam();">Upload</button>		
+      <button name="submit" id="nahrat" value="Nahrát" onclick="upload();">Upload</button>		
 </form>
 
 
