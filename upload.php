@@ -51,7 +51,7 @@ if(isset($_POST['submit']))
     	?>
     	
 
-    	<input type="text" class="zkopirovat" onclick="this.select();" readonly style="text-align: center;" value="http://example.com/<?php echo $cislo2; ?>">
+    	<input type="text" class="copy_to_clipboard" onclick="this.select();" readonly style="text-align: center;" value="http://example.com/<?php echo $cislo2; ?>">
   <script>
 function zkopirovat(el) {  
   var range = document.createRange();  
@@ -60,8 +60,8 @@ function zkopirovat(el) {
     
   try {  
     var zkopirovano = document.execCommand('copy'); 
-        if (zkopirovano) document.getElementById("kopirovat").innerHTML = "✔";
-    document.getElementById('nahrat').innerHTML='Upload';
+        if (zkopirovano) document.getElementById("copied").innerHTML = "✔";
+    document.getElementById('upload').innerHTML='Upload';
     else alert('Not make a copy.');
   } catch(err) {  
     alert('This browser is not valid in the copy files.');
@@ -70,7 +70,7 @@ function zkopirovat(el) {
 }
 
 </script>
-<button id="kopirovat" onclick="zkopirovat(document.querySelector('.zkopirovat'))">Copy link</button>
+<button id="copied" onclick="zkopirovat(document.querySelector('.copy_to_clipboard'))">Copy link</button>
 
     	<?php 
     }
