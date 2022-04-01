@@ -1,22 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>UPLOAD a image here</title>
+	<!-- This code is without styles, style updates and nothing, what is not related to JavaScript. -->
+  <title>Uploading image</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-	<script src="zobrazit.js"></script>
-    <style>
-  
-    body {background: linear-gradient(#333, black, #222) fixed;}
-      .uzivatele {background: darkviolet; }
-
-   .uzivatele:hover {background: linear-gradient(#af82e8, darkorchid);}
-   
-</style>
-</head><center style="box-shadow: 0 0 1em whitesmoke; border-radius: 2em; background: #EEE;">
+    <script src="zobrazit.js"></script>
+    <center>
 <body>
-
 <?php
-$db = mysqli_connect('localhost','root','password','dbname');
+$db = mysqli_connect('localhost','root','','images');
 
 if(!$db)
 {
@@ -29,9 +21,11 @@ if(isset($_POST['submit']))
     if ((($_FILES["image"]["type"] == "image/gif")
 || ($_FILES["image"]["type"] == "image/jpeg")
 || ($_FILES["image"]["type"] == "image/jpg")
+|| ($_FILES["image"]["type"] == "image/png")
 || ($_FILES["image"]["type"] == "image/png"))
-&& ($_FILES["image"]["size"] < 100000000)) // checks the image type and size
-    $povolene = array('jpg', 'jpeg', 'png', 'gif'); 
+&& ($_FILES["image"]["size"] < 4000000))
+    $povolene = array('jpg', 'jpeg', 'png', 'gif', 'svg');
+    $kod = htmlspecialchars($_POST['kod']); 
     $cislo1 = rand(1111,9999); 
     $cislo2 = rand(1111,9999);
 	$povolene = array_flip($povolene);
@@ -40,19 +34,18 @@ if(isset($_POST['submit']))
  
     
     $obr_nm = $_FILES['image']['name']; 
-    $umistit = 'images/'.$cislo3.$obr_nm; // the folder in which it will be
-    $umisteni = 'images/'.$cislo3.$obr_nm; // 
+    $umistit = 'images/'.$cislo3.$obr_nm;
+    $umisteni = 'images/'.$cislo3.$obr_nm; 
 
-    move_uploaded_file($_FILES['image']["tmp_name"],$umistit);  // upload file in folder 
-    $check = mysqli_query($db,"INSERT INTO images (images, kod) VALUES('$umisteni', '$cislo2')");  //insert image URL and code in DB
+    move_uploaded_file($_FILES['image']["tmp_name"],$umistit);  
+    $check = mysqli_query($db,"INSERT INTO images (images, kod) VALUES('$umisteni', '$kod')");  
 		
     if($check)
     { 
     	?>
     	
 
-    	<input type="text" class="copy_to_clipboard" onclick="this.select();" readonly style="text-align: center;" value="http://example.com/<?php echo $cislo2; ?>">
-  <script>
+    	<input type="text" class="textarea zkopirovat" onclick="this.select();" readonly style="text-align: center;" value="https://file.xf.cz/<?php echo $kod; ?>"><script>
 function zkopirovat(el) {  
   var range = document.createRange();  
   range.selectNode(el);  
@@ -60,23 +53,23 @@ function zkopirovat(el) {
     
   try {  
     var zkopirovano = document.execCommand('copy'); 
-        if (zkopirovano) document.getElementById("copied").innerHTML = "✔";
-    document.getElementById('upload').innerHTML='Upload';
-    else alert('Not make a copy.');
+        if (zkopirovano) document.getElementById("kopirovat").innerHTML = "Copied!";
+    else alert('It is not copied to the clipboard, sorry.');
   } catch(err) {  
-    alert('This browser is not valid in the copy files.');
+    alert('Your browser can not copying.');
+  }  
     
   window.getSelection().removeAllRanges();  
 }
-
+document.getElementById('nahrat').innerHTML = 'Upload';
 </script>
-<button id="copied" onclick="zkopirovat(document.querySelector('.copy_to_clipboard'))">Copy link</button>
+<button class="prehled" id="kopirovat" onclick="zkopirovat(document.querySelector('.zkopirovat'))">Copy to clipboard</button>
 
     	<?php 
     }
     else
     {
-    	echo '<script> alert("Error of uploading image."); </script>'; 
+    	echo '<script> alert("Error in uploading image."); </script>'; 
     }
 }
 
@@ -88,17 +81,35 @@ else {
 
 <h2>Nahrát obrázek:</h2>
 <script>
-    function upload() {
-        document.getElementById('upload').innerHTML='Uploading…';
+    function nahravam() {
+        document.getElementById('nahrat').innerHTML = 'Uploading…';
     }
 </script>
-	    <img style="display: none" id="nahrany-img">
-<form method="POST" enctype="multipart/form-data">
-      Nahraj nebo přetáhni soubory sem:
-      <input type="file" name="image" onchange="zobrazit(this)" required style="cursor: pointer; padding: 10px;" size="800">
-     
-      <button name="submit" id="upload" value="Upload" onclick="upload();">Upload</button>		
+<div class="img">
+    <img style="display: none" id="nahrany-obr">
+</div>
+<form method="POST" enctype="multipart/form-data" id="fileform">
+      Upload, paste or drag and drop files here:
+      <input type="file" onchange="zobrazit(this)" id="imageform" name="image" required class="prehled" style="cursor: pointer; padding: 10px;" size="800">
+      <input type="hidden" name="kod" value="<?php $sql = "SELECT * FROM nahodne ORDER BY RAND() LIMIT 4";
+    $result = $db->query($sql);
+    if ($result->num_rows > 0) {
+      while($row = $result->fetch_assoc()) { echo $row['kod']; } } ?>">
+      <button name="submit" id="nahrat" value="Nahrát" class="uzivatele" onclick="nahravam();">Upload</button>		
 </form>
 
+<script>
+    const form = document.getElementById("fileform");
+const fileInput = document.getElementById("imageform");
+
+fileInput.addEventListener('change', () => {
+  form.submit();
+});
+
+window.addEventListener('paste', e => {
+  fileInput.files = e.clipboardData.files;
+});
+</script>
 
 <br>
+</body>
