@@ -45,7 +45,7 @@ if(isset($_POST['submit']))
     	?>
     	
 
-    	<input type="text" class="textarea zkopirovat" onclick="this.select();" readonly style="text-align: center;" value="https://file.xf.cz/<?php echo $kod; ?>"><script>
+    	<input type="text" class="textarea zkopirovat" onclick="this.select();" readonly style="text-align: center;" value="https://yourdreamwebsitename.com/<?php echo $kod; ?>"><script>
 function zkopirovat(el) {  
   var range = document.createRange();  
   range.selectNode(el);  
@@ -95,7 +95,7 @@ else {
     $result = $db->query($sql);
     if ($result->num_rows > 0) {
       while($row = $result->fetch_assoc()) { echo $row['kod']; } } ?>">
-      <button name="submit" id="nahrat" value="Nahrát" class="uzivatele" onclick="nahravam();">Upload</button>		
+      <button name="submit" id="nahrat" value="Upload" class="uzivatele" onclick="nahravam();">Upload</button>		
 </form>
 
 <script>
